@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, Suspense } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -8,7 +8,7 @@ import { Building2, Users, Upload, FileSpreadsheet, CheckCircle, AlertCircle, Lo
 
 type UploadType = "accounts" | "contacts"
 
-export default function UploadPage() {
+function UploadContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const defaultType = searchParams.get("type") === "contacts" ? "contacts" : "accounts"
@@ -221,5 +221,23 @@ export default function UploadPage() {
         </CardContent>
       </Card>
     </div>
+  )
+}
+
+export default function UploadPage() {
+  return (
+    <Suspense fallback={
+      <div className="space-y-8">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Upload CSV</h1>
+          <p className="text-muted-foreground">Import ZoomInfo account and contact data</p>
+        </div>
+        <div className="flex items-center justify-center p-12">
+          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+        </div>
+      </div>
+    }>
+      <UploadContent />
+    </Suspense>
   )
 }

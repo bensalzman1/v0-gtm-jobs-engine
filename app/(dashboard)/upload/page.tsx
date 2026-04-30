@@ -130,27 +130,26 @@ function UploadContent() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div
-            className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-border p-8 transition-colors hover:border-primary/50"
-          >
-            <Upload className="mb-4 h-10 w-10 text-muted-foreground" />
-            <p className="mb-2 text-sm font-medium text-foreground">
-              {file ? file.name : "Drop your CSV file here or click to browse"}
-            </p>
-            <p className="text-xs text-muted-foreground">CSV files only, max 50MB</p>
+          <div className="relative">
             <input
               id="csv-upload"
               type="file"
-              accept=".csv"
+              accept=".csv,text/csv"
               onChange={handleFileChange}
-              className="absolute inset-0 cursor-pointer opacity-0"
-              style={{ position: "relative" }}
+              className="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0"
             />
-            <Button variant="outline" className="mt-4" asChild>
-              <label htmlFor="csv-upload" className="cursor-pointer">
+            <div
+              className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-border p-8 transition-colors hover:border-primary/50 hover:bg-muted/50"
+            >
+              <Upload className="mb-4 h-10 w-10 text-muted-foreground" />
+              <p className="mb-2 text-sm font-medium text-foreground">
+                {file ? file.name : "Drop your CSV file here or click to browse"}
+              </p>
+              <p className="text-xs text-muted-foreground">CSV files only, max 50MB</p>
+              <Button variant="outline" className="pointer-events-none mt-4">
                 Select File
-              </label>
-            </Button>
+              </Button>
+            </div>
           </div>
 
           {file && (
